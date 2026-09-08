@@ -1,6 +1,7 @@
 package com.ibrahim.study_platform.task;
 
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service 
 public class TaskService {
@@ -16,6 +17,10 @@ public class TaskService {
         task.setTitle(title);
         
         return taskRepository.save(task);
+    }
+
+    public List<Task> getAllTasks(){
+        return taskRepository.findAll();
     }
     
 }
