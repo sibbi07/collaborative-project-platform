@@ -42,6 +42,16 @@ public class TaskService {
         existingTask.setCompleted(request.getCompleted());
 
         return taskRepository.save(existingTask);
-}
+    }
+
+    public boolean deleteTask(Long id){
+        Optional<Task> task = getTaskById(id);
+        if(task.isEmpty()){
+            return false;
+        }
+
+        taskRepository.deleteById(id);
+        return true;
+    }
     
 }

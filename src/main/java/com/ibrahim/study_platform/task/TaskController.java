@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.ibrahim.study_platform.task.dto.TaskUpdateRequest;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,9 +49,19 @@ public class TaskController {
         Task task = taskService.updateTask(id, request);
 
         if(task != null){
-            return ResponseEntity.ok(task)
+            return ResponseEntity.ok(task);
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/tasks/{id}")
+    public ResponseEntity<Void> deleteTask(@PathVariable Long id){
+        boolean deleted = taskService.deleteTask(id);
+        if(deleted){
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.noContent().build();
     }
 }
