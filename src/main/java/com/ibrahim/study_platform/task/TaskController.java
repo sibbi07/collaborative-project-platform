@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
+import jakarta.validation.Valid;
 
 @RestController 
 public class TaskController {
@@ -24,7 +25,7 @@ public class TaskController {
     }
 
     @PostMapping("/tasks")
-    public Task addTask(@RequestBody CreateTaskRequest request){
+    public Task addTask(@RequestBody @Valid CreateTaskRequest request){
         return taskService.createTask(request.getTitle());
     }
 
@@ -45,7 +46,7 @@ public class TaskController {
     }
 
     @PutMapping("/tasks/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody TaskUpdateRequest request){
+    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody @Valid TaskUpdateRequest request){
         Task task = taskService.updateTask(id, request);
 
         if(task != null){

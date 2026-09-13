@@ -1,6 +1,10 @@
 package com.ibrahim.study_platform.task.dto;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class TaskUpdateRequest {
+    @NotBlank 
+    @Size(max = 100)
     private String title;
     private boolean completed;
 
