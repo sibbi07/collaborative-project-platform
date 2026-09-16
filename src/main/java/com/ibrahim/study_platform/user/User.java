@@ -27,10 +27,10 @@ public class User {
 
     private String password;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy="user")
     private List<Membership> memberships = new ArrayList<Membership>();
 
-    @OneToMany(mappedBy = "assignee")
+    @OneToMany(mappedBy="assignee")
     private List<Task> tasks = new ArrayList<Task>();
 
     protected User(){

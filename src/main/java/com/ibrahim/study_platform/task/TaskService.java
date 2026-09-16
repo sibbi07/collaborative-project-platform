@@ -39,7 +39,7 @@ public class TaskService {
         Task existingTask = task.get();
 
         existingTask.setTitle(request.getTitle());
-        existingTask.setCompleted(request.getCompleted());
+        existingTask.setStatus(request.getStatus());
 
         return taskRepository.save(existingTask);
     }

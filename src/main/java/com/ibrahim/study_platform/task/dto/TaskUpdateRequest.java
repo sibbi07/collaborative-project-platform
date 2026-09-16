@@ -1,4 +1,5 @@
 package com.ibrahim.study_platform.task.dto;
+import com.ibrahim.study_platform.task.TaskStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -6,7 +7,7 @@ public class TaskUpdateRequest {
     @NotBlank 
     @Size(max = 100)
     private String title;
-    private boolean completed;
+    private TaskStatus status;
 
     
     public String getTitle(){
@@ -17,12 +18,12 @@ public class TaskUpdateRequest {
         this.title = title;
     }
 
-    public boolean getCompleted(){
-        return completed;
+    public TaskStatus getStatus(){
+        return status;
     }
 
-    public void setCompleted(boolean completed){
-        this.completed = completed;
+    public void setCompleted(TaskStatus status){
+        this.status = status;
     }
 
 }
