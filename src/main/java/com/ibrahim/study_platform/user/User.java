@@ -9,10 +9,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
 import java.util.List;
 import java.util.ArrayList;
 
 @Entity
+@Table(name="users")
 public class User {
 
     @Id 
@@ -40,5 +43,53 @@ public class User {
 
     // Protected no-argument constructor required by JPA when creating User entities.
     protected User(){
+    }
+
+    public Long getId(){
+        return id;
+    }
+
+    public void setId(Long id){
+        this.id = id;
+    }
+
+    public String getUsername(){
+        return username;
+    }
+
+    public void setUsername(String username){
+        this.username = username;
+    }
+
+    public String getEmail(){
+        return email;
+    }
+
+    public void setEmail(String email){
+        this.email = email;
+    }
+
+    public String getPassword(){
+        return password;
+    }
+
+    public void setPassword(String password){
+        this.password = password;
+    }
+
+    public List<Membership> getMemberships(){
+        return memberships;
+    }
+
+    public void setMemberships(List<Membership> memberships){
+        this.memberships = memberships;
+    }
+
+    public List<Task> getTasks(){
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks){
+        this.tasks = tasks;
     }
 }

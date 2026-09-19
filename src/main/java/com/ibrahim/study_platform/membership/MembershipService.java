@@ -1,4 +1,3 @@
-```java
 package com.ibrahim.study_platform.membership;
 
 import org.springframework.stereotype.Service;

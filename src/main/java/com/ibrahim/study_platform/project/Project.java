@@ -39,6 +39,7 @@ public class Project {
     // Protected no-argument constructor required by JPA when creating Project entities.
     protected Project(){}
 
+    //Getters and setters
     public Long getId(){
         return id;
     }
