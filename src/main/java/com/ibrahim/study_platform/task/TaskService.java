@@ -1,8 +1,14 @@
 package com.ibrahim.study_platform.task;
 
+import com.ibrahim.study_platform.project.Project;
+import com.ibrahim.study_platform.project.ProjectRepository;
 import com.ibrahim.study_platform.task.dto.TaskUpdateRequest;
+import com.ibrahim.study_platform.user.User;
+import com.ibrahim.study_platform.user.UserRepository;
 
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,16 +16,33 @@ import java.util.Optional;
 public class TaskService {
 
     private final TaskRepository taskRepository;
+    private final ProjectRepository projectRepository;
+    private final UserRepository userRepository;
 
     // Inject the repository required to store and retrieve Tasks from the database.
-    public TaskService(TaskRepository taskRepository){
+    public TaskService(TaskRepository taskRepository, ProjectRepository projectRepository, UserRepository userRepository){
         this.taskRepository = taskRepository;
+        this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
     }
 
-    // Create a new Task, set its title, and save it to the database.
-    public Task createTask(String title){
+    // Create a new Task and save it to the database.
+    public Task createTask(String title, Long projectId, LocalDateTime deadline, Long assigneeId){
         Task task = new Task();
         task.setTitle(title);
+        task.setDeadline(deadline);
+        
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new IllegalArgumentException("Project with ID " + projectId + " does not exist."));
+                
+        if(assigneeId != null){
+            User assignee = userRepository.findById(assigneeId)
+                .orElseThrow(() -> new IllegalArgumentException("User with ID " + assigneeId + " does not exist."));
+                
+            task.setAssignee(assignee);
+        }
+
+        task.setProject(project);
         
         return taskRepository.save(task);
     }

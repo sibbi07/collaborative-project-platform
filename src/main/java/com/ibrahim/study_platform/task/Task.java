@@ -35,6 +35,29 @@ public class Task {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+
+        // Automatically record when the Task is first saved to the database.
+    @PrePersist 
+    public void onCreate(){
+        this.createdAt = LocalDateTime.now();
+    }
+
+    // Automatically record when an existing Task is updated in the database.
+    @PreUpdate
+    public void onUpdate(){
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    // Each Task belongs to exactly one Project.
+    @ManyToOne 
+    @JoinColumn(name="project_id", nullable=false)
+    private Project project;
+
+    // A Task can optionally be assigned to a User.
+    @ManyToOne 
+    @JoinColumn(name="assignee_id")
+    private User assignee; 
+
     // Getters and setters provide access to the Task's editable properties.
     public Long getId(){
         return id;
@@ -60,25 +83,43 @@ public class Task {
         this.status = status;
     }
 
-    // Automatically record when the Task is first saved to the database.
-    @PrePersist 
-    public void onCreate(){
-        this.createdAt = LocalDateTime.now();
+    public LocalDateTime getDeadline(){
+        return deadline;
     }
 
-    // Automatically record when an existing Task is updated in the database.
-    @PreUpdate
-    public void onUpdate(){
-        this.updatedAt = LocalDateTime.now();
+    public void setDeadline(LocalDateTime deadline){
+        this.deadline = deadline;
     }
 
-    // Each Task belongs to exactly one Project.
-    @ManyToOne 
-    @JoinColumn(name="project_id", nullable=false)
-    private Project project;
+    public LocalDateTime getCreatedAt(){
+        return createdAt;
+    }
 
-    // A Task can optionally be assigned to a User.
-    @ManyToOne 
-    @JoinColumn(name="assignee_id")
-    private User assignee;
+    public void setCreatedAt(LocalDateTime createdAt){
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt(){
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt){
+        this.updatedAt = updatedAt;
+    }
+
+    public Project getProject(){
+        return project;
+    }
+
+    public void setProject(Project project){
+        this.project = project;
+    }
+
+    public User getAssignee(){
+        return assignee;
+    }
+
+    public void setAssignee(User assignee){
+        this.assignee = assignee;
+    }
 }
