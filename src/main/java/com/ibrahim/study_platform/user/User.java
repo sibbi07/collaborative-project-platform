@@ -19,6 +19,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Usernames and email addresses must be unique across all Users.
     @Column(unique = true)
     private String username;
 
@@ -27,14 +28,17 @@ public class User {
 
     private String password;
 
+    // Store all Project Memberships associated with this User.
+    // The Membership entity owns the relationship through its "user" field.
     @OneToMany(mappedBy="user")
     private List<Membership> memberships = new ArrayList<Membership>();
 
+    // Store all Tasks currently assigned to this User.
+    // The Task entity owns the relationship through its "assignee" field.
     @OneToMany(mappedBy="assignee")
     private List<Task> tasks = new ArrayList<Task>();
 
+    // Protected no-argument constructor required by JPA when creating User entities.
     protected User(){
     }
-
-
 }

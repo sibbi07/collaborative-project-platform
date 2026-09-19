@@ -20,20 +20,24 @@ import jakarta.validation.Valid;
 public class TaskController {
     private final TaskService taskService;
 
+    // Inject the TaskService responsible for handling task-related business logic.
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
     }
 
+    // Create a new Task using the title provided in the request body.
     @PostMapping("/tasks")
     public Task addTask(@RequestBody @Valid CreateTaskRequest request){
         return taskService.createTask(request.getTitle());
     }
 
+    // Retrieve all Tasks.
     @GetMapping("/tasks")
     public List<Task> getAllTasks(){
         return taskService.getAllTasks();
     }
 
+    // Retrieve a Task by its ID and return 404 if the Task does not exist.
     @GetMapping("/tasks/{id}")
     public ResponseEntity<Task> getTaskById(@PathVariable Long id){
         Optional<Task> task = taskService.getTaskById(id);
@@ -45,6 +49,7 @@ public class TaskController {
         return ResponseEntity.notFound().build();
     }
 
+    // Update an existing Task and return 404 if the Task does not exist.
     @PutMapping("/tasks/{id}")
     public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody @Valid TaskUpdateRequest request){
         Task task = taskService.updateTask(id, request);
@@ -56,9 +61,11 @@ public class TaskController {
         return ResponseEntity.notFound().build();
     }
 
+    // Delete a Task by its ID and return an appropriate response based on whether it existed.
     @DeleteMapping("/tasks/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id){
         boolean deleted = taskService.deleteTask(id);
+
         if(deleted){
             return ResponseEntity.ok().build();
         }
