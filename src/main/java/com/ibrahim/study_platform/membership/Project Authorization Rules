@@ -1,0 +1,54 @@
+OWNER:
+- Can add members to project
+- Can remove members from project
+- Can promote MEMBER → ADMIN
+- Can demote ADMIN → MEMBER
+- Can transfer ownership
+- Can only be 1 per project
+- Can assign tasks to any project member
+- Can modify tasks
+- Can delete tasks
+- Can modify project attributes (name, description, deadline, etc.)
+- Can delete project
+
+
+ADMIN:
+- Can add members to project
+- Can remove MEMBERs from project
+- Can promote MEMBER → ADMIN
+- Cannot demote ADMINs or OWNER
+- Cannot remove ADMINs or OWNER
+- Can assign tasks to any project member
+- Can modify tasks
+- Can delete tasks
+- Can modify project attributes (name, description, deadline, etc.)
+- Cannot delete project
+
+
+MEMBER:
+- Cannot add/remove members
+- Cannot promote/demote members
+- Cannot modify project
+- Cannot delete project
+- Cannot modify/delete tasks
+- Can be assigned tasks
+- Can view project and its tasks
+
+
+
+Rules
+PROJECT:
+- Exactly 1 OWNER
+- A user can have at most 1 membership per project
+- New members always join as MEMBER
+- A task can only be assigned to a member of its project
+- Removing a member unassigns their tasks
+
+
+OWNERSHIP:
+- Only OWNER can transfer ownership
+- Ownership transfer swaps roles:
+    OWNER → target's previous role
+    target → OWNER
+- OWNER cannot simply demote themselves
+- There can only ever be 1 OWNER
