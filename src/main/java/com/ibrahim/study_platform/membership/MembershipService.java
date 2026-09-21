@@ -4,11 +4,14 @@ import org.springframework.stereotype.Service;
 
 import com.ibrahim.study_platform.membership.MembershipRepository;
 import com.ibrahim.study_platform.membership.MembershipRole;
+import com.ibrahim.study_platform.membership.dto.MembershipResponse;
 import com.ibrahim.study_platform.user.UserRepository;
 import com.ibrahim.study_platform.user.User;
 import com.ibrahim.study_platform.project.ProjectRepository;
 import com.ibrahim.study_platform.project.Project;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MembershipService {
@@ -24,7 +27,7 @@ public class MembershipService {
     }
 
     // Adds a User to a Project and determines their role based on whether they are the first member.
-    public Membership addMember(Long projectId, Long userId) {
+    public MembershipResponse addMember(Long projectId, Long userId) {
 
         // Retrieve the Project. Throw an exception if the specified Project does not exist.
         Project project = projectRepository.findById(projectId)
@@ -58,7 +61,48 @@ public class MembershipService {
         membership.setUser(user);
 
         // Save the new Membership to the database and return the persisted entity.
-        return membershipRepository.save(membership);
+        Membership savedMember = membershipRepository.save(membership);
+        
+        return toResponse(savedMember);
     }
+
+    public List<MembershipResponse> getAllMembers(){
+        List<Membership> memberList = membershipRepository.findAll();
+        return memberList.stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
+    public Optional<MembershipResponse> getMemberById(Long id){
+        return membershipRepository.findById(id)
+                .map(this::toResponse);
+    }
+
+    public boolean deleteMember(Long id){
+        Optional<Membership> member = membershipRepository.findById(id);
+
+        if(member.isEmpty()){
+            return false;
+        }
+
+        membershipRepository.deleteById(id);
+
+        return true;
+    }
+
+    private MembershipResponse toResponse(Membership member){
+        MembershipResponse response = new MembershipResponse();
+        
+        response.setId(member.getId());
+        response.setRole(member.getRole());
+        response.setJoinedAt(member.getJoinedAt());
+        response.setProjectId(member.getProject().getId());
+        if(member.getUser() != null){
+            response.setUserId(member.getUser().getId());
+        }
+
+        return response;
+    }
+
 }
 

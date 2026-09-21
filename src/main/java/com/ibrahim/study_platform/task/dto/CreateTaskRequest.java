@@ -11,6 +11,7 @@ public class CreateTaskRequest {
     private String title;
     private LocalDateTime deadline;
     private Long assigneeId;
+    private Long projectId;
 
     public CreateTaskRequest(){}
 
@@ -28,6 +29,14 @@ public class CreateTaskRequest {
 
     public void setDeadline(LocalDateTime deadline){
         this.deadline = deadline;
+    }
+
+    public Long getProjectId(){
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId){
+        this.projectId = projectId;
     }
 
     public Long getAssigneeId(){
