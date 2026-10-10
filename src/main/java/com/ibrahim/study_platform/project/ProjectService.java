@@ -42,7 +42,7 @@ public class ProjectService {
 
         // Add the creator as the first member of the Project.
         // MembershipService will assign them the OWNER role.
-        membershipService.addMember(projectId, creatorId);
+        membershipService.createOwnerMembership(projectId, creatorId);
 
         return toResponse(savedProject);
     }

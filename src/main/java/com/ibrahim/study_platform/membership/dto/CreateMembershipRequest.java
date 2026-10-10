@@ -3,6 +3,7 @@ package com.ibrahim.study_platform.membership.dto;
 public class CreateMembershipRequest {
     private Long userId;
     private Long projectId;
+    private Long requestingUserId;
 
     public CreateMembershipRequest(){}
 
@@ -20,5 +21,13 @@ public class CreateMembershipRequest {
 
     public void setProjectId(Long projectId){
         this.projectId = projectId;
+    }
+
+    public Long getRequestingUserId(){
+        return requestingUserId;
+    }
+
+    public void setRequestingUserId(){
+        this.requestingUserId = requestingUserId;
     }
 }

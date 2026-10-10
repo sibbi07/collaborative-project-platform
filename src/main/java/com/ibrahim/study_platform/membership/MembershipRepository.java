@@ -1,5 +1,7 @@
 package com.ibrahim.study_platform.membership;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 // Provides database operations for Membership entities.
@@ -10,5 +12,7 @@ public interface MembershipRepository extends JpaRepository<Membership, Long>{
 
     // Checks whether a specific User is already a member of a specific Project.
     boolean existsByProjectIdAndUserId(Long projectId, Long userId);
+
+    Optional<Membership> findByProjectIdAndUserId(Long projectId, Long userId);
 
 }

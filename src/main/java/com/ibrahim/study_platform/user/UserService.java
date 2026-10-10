@@ -2,7 +2,6 @@ package com.ibrahim.study_platform.user;
 
 import org.springframework.stereotype.Service;
 
-import com.ibrahim.study_platform.project.Project;
 import com.ibrahim.study_platform.user.dto.UserResponse;
 import com.ibrahim.study_platform.user.dto.UserUpdateRequest;
 

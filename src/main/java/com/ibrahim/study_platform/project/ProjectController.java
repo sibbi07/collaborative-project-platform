@@ -9,11 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.ibrahim.study_platform.membership.Membership;
 import com.ibrahim.study_platform.project.dto.CreateProjectRequest;
 import com.ibrahim.study_platform.project.dto.ProjectResponse;
 import com.ibrahim.study_platform.project.dto.ProjectUpdateRequest;
-import com.ibrahim.study_platform.task.dto.TaskResponse;
 
 import jakarta.validation.Valid;
 
