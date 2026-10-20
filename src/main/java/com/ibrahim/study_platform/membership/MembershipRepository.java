@@ -1,6 +1,7 @@
 package com.ibrahim.study_platform.membership;
 
 import java.util.Optional;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -14,5 +15,7 @@ public interface MembershipRepository extends JpaRepository<Membership, Long>{
     boolean existsByProjectIdAndUserId(Long projectId, Long userId);
 
     Optional<Membership> findByProjectIdAndUserId(Long projectId, Long userId);
+
+    List<Membership> findByUserId(Long userId);
 
 }

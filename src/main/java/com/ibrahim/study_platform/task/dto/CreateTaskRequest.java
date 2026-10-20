@@ -12,6 +12,7 @@ public class CreateTaskRequest {
     private LocalDateTime deadline;
     private Long assigneeId;
     private Long projectId;
+    private Long requestingUserId;
 
     public CreateTaskRequest(){}
 
@@ -45,5 +46,13 @@ public class CreateTaskRequest {
 
     public void setAssigneeId(Long assigneeId){
         this.assigneeId = assigneeId;
+    }
+
+    public Long getRequestingUserId(){
+        return requestingUserId;
+    }
+
+    public void setRequestingUserId(Long requestingUserId){
+        this.requestingUserId = requestingUserId;
     }
 }

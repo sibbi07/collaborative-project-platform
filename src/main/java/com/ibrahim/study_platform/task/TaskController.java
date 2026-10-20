@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import jakarta.validation.Valid;
@@ -36,48 +37,48 @@ public class TaskController {
             request.getTitle(), 
             request.getProjectId(),
             request.getDeadline(),
-            request.getAssigneeId());
+            request.getAssigneeId(),
+            request.getRequestingUserId());
     }
 
-    // Retrieve all Tasks.
-    @GetMapping
-    public List<TaskResponse> getAllTasks(){
-        return taskService.getAllTasks();
+   @GetMapping
+    public List<TaskResponse> getAllTasks(
+            @RequestParam Long requestingUserId) {
+        return taskService.getAllTasks(requestingUserId);
     }
 
-    // Retrieve a Task by its ID and return 404 if the Task does not exist.
     @GetMapping("/{id}")
-    public ResponseEntity<TaskResponse> getTaskById(@PathVariable Long id){
-        Optional<TaskResponse> task = taskService.getTaskById(id);
+    public ResponseEntity<TaskResponse> getTaskById(
+            @PathVariable Long id,
+            @RequestParam Long requestingUserId) {
 
-        if(task.isPresent()){
-            return ResponseEntity.ok(task.get());
-        }
+        Optional<TaskResponse> task =
+                taskService.getTaskById(id, requestingUserId);
 
-        return ResponseEntity.notFound().build();
+        return task.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // Update an existing Task and return 404 if the Task does not exist.
     @PutMapping("/{id}")
-    public ResponseEntity<TaskResponse> updateTask(@PathVariable Long id, @RequestBody @Valid TaskUpdateRequest request){
-        TaskResponse task = taskService.updateTask(id, request);
+    public ResponseEntity<TaskResponse> updateTask(
+            @PathVariable Long id,
+            @RequestParam Long requestingUserId,
+            @RequestBody @Valid TaskUpdateRequest request) {
 
-        if(task != null){
-            return ResponseEntity.ok(task);
-        }
+        TaskResponse task = taskService.updateTask(
+                id, request, requestingUserId);
 
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(task);
     }
 
-    // Delete a Task by its ID and return an appropriate response based on whether it existed.
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTask(@PathVariable Long id){
-        boolean deleted = taskService.deleteTask(id);
+    public ResponseEntity<Void> deleteTask(
+            @PathVariable Long id,
+            @RequestParam Long requestingUserId) {
 
-        if(deleted){
-            return ResponseEntity.noContent().build();
-        }
+        taskService.deleteTask(id, requestingUserId);
 
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.noContent().build();
     }
 }
